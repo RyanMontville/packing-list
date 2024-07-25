@@ -1,7 +1,7 @@
 @if (!showReset) {
 <main>
     <section id="Checklist-header">
-        <a href="/" class="btn"><span class="material-symbols-outlined">
+        <a routerLink="/" class="btn"><span class="material-symbols-outlined">
                 arrow_back
             </span></a>
         <span>
@@ -58,7 +58,7 @@
     </section>
     <div id="reset-box">
         <h3>When are you leaving?</h3>
-        <input [(ngModel)]="dateLeaving" type="text" placeholder="Enter date you are leaving" class="Search-input"
+        <input [(ngModel)]="dateLeaving" type="date" placeholder="Enter date you are leaving" class="Search-input"
             (keydown.enter)="onSubmit(1)" id="dateInputBox" />
     </div>
 </main>

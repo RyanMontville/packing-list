@@ -5,5 +5,4 @@ An app that lets you create a packing list for an upcoming trip. The app allows 
 Currently working on:
 * testing out using local storage for users without needing passwords.
 * dark/light mode based on device preferences.
-
-[link](https://ryanmontville.github.io/packing-list/) to test local storage. The app is not finished yet. Several things will not work.
+* Currently pausing development on this app to learn node.js to create an api for this app
