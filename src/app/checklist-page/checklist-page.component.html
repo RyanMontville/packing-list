@@ -1,0 +1,57 @@
+@if (!showReset) {
+<main>
+    <section id="Checklist-header">
+        <a href="/" class="btn"><span class="material-symbols-outlined">
+            arrow_back
+            </span></a>
+        <span>
+            <h2>{{checklistName}}</h2>
+        <h3>Leaving: {{dateLeaving}}</h3>
+        </span>
+        <button (click)="resetChecklist()" class="btn">Reset</button>
+    </section>
+    <section id="list">
+        @for (item of checklistItems; track item) {
+        <div class="item" (click)="changeState(item)">
+            @if (!item.isChecked) {
+            <span class="material-symbols-outlined">
+                check_box_outline_blank
+            </span>
+            }
+            @if (item.isChecked) {
+            <span class="material-symbols-outlined green">
+                check_box
+            </span>
+            }
+            <p [style]="{'textDecoration': item.textDecoration}">{{item.itemName}}</p>
+        </div>
+        }
+        @if (!showAddItem) {
+        <div class="item" (click)="showAdd()">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+            <p>Add item to list</p>
+        </div>
+        }
+    </section>
+    @if (showAddItem) {
+    <section class="item">
+        <input [(ngModel)]="itemText" type="text" placeholder="Enter item to add to list" class="Search-input"
+            (keydown.enter)="onSubmit(0)" id="addItemBox" />
+    </section>
+    }
+</main>
+}
+@if (showReset) {
+<main>
+    <section id="Checklist-header">
+        <h2>{{checklistName}}</h2>
+    </section>
+    <div id="reset-box">
+        <h3>When are you leaving?</h3>
+        <input [(ngModel)]="dateLeaving" type="text" placeholder="Enter date you are leaving" class="Search-input"
+            (keydown.enter)="onSubmit(1)" id="dateInputBox" />
+    </div>
+</main>
+}

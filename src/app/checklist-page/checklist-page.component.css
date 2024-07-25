@@ -1,0 +1,62 @@
+#Checklist-header {
+    border-bottom: 1px solid darkgray;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2 {
+    font-size: 50px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+.item {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-top: 1px solid darkgray;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#item p {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.green {
+    color: green;
+}
+
+input[type="text"],
+select {
+    width: 95%;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#reset-box {
+    padding: 10px 20px;
+    border-top: 1px solid darkgray;
+    font-size: 30px;
+}
+
+@media only screen and (max-width: 950px) {
+    main {
+        width: 95%;
+    }
+}

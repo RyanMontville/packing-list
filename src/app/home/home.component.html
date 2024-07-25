@@ -1,0 +1,23 @@
+<main>
+    <section id="list-of-lists">
+        <div class="list-name">
+            <a (click)="goToList(0)">Camping List</a>
+        </div>
+        <div class="list-name">
+            <a (click)="goToList(1)">Florida List</a>
+        </div>
+    </section>
+    @if (!showCreateNewList) {
+        <div class="new-list-link" (click)="showCreateNewList = true">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+            <p>Start new list</p>
+        </div>
+    }
+    @if (showCreateNewList) {
+        <div class="list-name">
+            add box go here
+        </div>
+    }
+</main>
