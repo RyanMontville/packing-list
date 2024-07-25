@@ -1,23 +1,33 @@
 <main>
-    <section id="list-of-lists">
-        <div class="list-name">
-            <a (click)="goToList(0)">Camping List</a>
-        </div>
-        <div class="list-name">
-            <a (click)="goToList(1)">Florida List</a>
-        </div>
-    </section>
-    @if (!showCreateNewList) {
-        <div class="new-list-link" (click)="showCreateNewList = true">
-            <span class="material-symbols-outlined">
-                add
-            </span>
-            <p>Start new list</p>
-        </div>
+    @if (!askForUsername) {
+        <section id="app-header">
+            <h1>Logged in as {{username}}</h1>
+            <button (click)="askForUsername = true">switch users</button>
+        </section>
+        <section id="list-of-lists">
+            @for (list of userLists; track list) {
+                <div class="list-name">
+                    <a (click)="goToList(list.ID)">{{list.title}}</a>
+                </div>
+            }
+            
+        </section>
+        @if (!showCreateNewList) {
+            <div id="new-list-link" (click)="showCreateNewList = true">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                <p>Start new list</p>
+            </div>
+        }
+        @if (showCreateNewList) {
+            
+        }
     }
-    @if (showCreateNewList) {
+    @if (askForUsername) {
         <div class="list-name">
-            add box go here
+            <input [(ngModel)]="usernameResopnse" type="text" placeholder="Enter your username" class="Search-input"
+            (keydown.enter)="onSubmit(0)" id="setUserBox" />
         </div>
     }
 </main>

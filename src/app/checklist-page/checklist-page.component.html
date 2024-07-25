@@ -2,29 +2,23 @@
 <main>
     <section id="Checklist-header">
         <a href="/" class="btn"><span class="material-symbols-outlined">
-            arrow_back
+                arrow_back
             </span></a>
         <span>
             <h2>{{checklistName}}</h2>
-        <h3>Leaving: {{dateLeaving}}</h3>
+            <h3>Leaving: {{dateLeaving}}</h3>
+            <h3>{{itemsLeft}}</h3>
         </span>
         <button (click)="resetChecklist()" class="btn">Reset</button>
     </section>
     <section id="list">
         @for (item of checklistItems; track item) {
-        <div class="item" (click)="changeState(item)">
             @if (!item.isChecked) {
-            <span class="material-symbols-outlined">
-                check_box_outline_blank
-            </span>
+                <div class="item" (click)="changeState(item)">
+                    <span class="material-symbols-outlined">check_box_outline_blank</span>
+                    <p>{{item.itemName}}</p>
+                </div>
             }
-            @if (item.isChecked) {
-            <span class="material-symbols-outlined green">
-                check_box
-            </span>
-            }
-            <p [style]="{'textDecoration': item.textDecoration}">{{item.itemName}}</p>
-        </div>
         }
         @if (!showAddItem) {
         <div class="item" (click)="showAdd()">
@@ -41,6 +35,20 @@
             (keydown.enter)="onSubmit(0)" id="addItemBox" />
     </section>
     }
+    <section id="done-items">
+        <h2>Completed</h2>
+        @for (item of checklistItems; track item) {
+            @if (item.isChecked) {
+                <div class="item" (click)="changeState(item)">
+                    <span class="material-symbols-outlined green">
+                        check_box
+                    </span>
+                    <p>{{item.itemName}}</p>
+                </div>
+            }
+
+        }
+    </section>
 </main>
 }
 @if (showReset) {

@@ -1,3 +1,12 @@
+#app-header {
+    padding: 20px;
+    text-align: center;
+}
+
+#app-header h1 {
+    font-size: 50px;
+}
+
 #list-of-lists {
     display: flex;
     flex-direction: column;
@@ -18,15 +27,9 @@
     border: 0;
 }
 
-#new-list-link{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 #new-list-link p {
     flex-grow: 1;
     text-align: center;
     padding: 20px;
-    border-top: 1px solid darkgray;
     font-size: 30px;
 }

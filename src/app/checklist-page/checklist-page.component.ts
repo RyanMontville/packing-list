@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../item.model';
 import { FormsModule } from '@angular/forms';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-checklist-page',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgStyle],
   templateUrl: './checklist-page.component.html',
   styleUrl: './checklist-page.component.css'
 })
@@ -18,6 +19,7 @@ export class ChecklistPageComponent implements OnInit {
   itemText: string = "";
   showAddItem: boolean = false;
   showReset: boolean = false;
+  itemsLeft: string = "";
 
   constructor(
     private router: Router,
@@ -31,26 +33,20 @@ export class ChecklistPageComponent implements OnInit {
     if (this.checklistID === 0) {
       this.checklistName = "Camping Checklist";
       this.dateLeaving = "August 1st, 2024"
-      this.checklistItems = [new Item(0, 'Dog bowls', false, 'none'), new Item(0,'Dog food', false, 'none'), new Item(0, 'Dog medicine', false, 'none')]
+      this.checklistItems = [new Item(0, 'Dog bowls', false), new Item(0,'Dog food', false), new Item(0, 'Dog medicine', false)];
     } else if (this.checklistID === 1) {
       this.checklistName = "Florida List"
       this.showReset = true;
+    } else if (this.checklistID == 2) {
+      this.checklistName = "Back to Chicago";
+      this.checklistItems = [new Item(2, 'laptop', false), new Item(2, '2nd monitor', false), new Item(2, "Rufus's bowls", false), new Item(2, 'kobo', false)];
     }
-  }
-
-  changeState(item: Item) {
-    if (item.isChecked == false) {
-      item.isChecked = true
-      item.textDecoration = 'line-through'
-    } else {
-      item.isChecked = false;
-      item.textDecoration = 'none';
-    }
+    this.countItemsLeft();
   }
 
   onSubmit(action: number) {
     if (action === 0) {
-      let newItem: Item = new Item(this.checklistID, this.itemText, false, 'none');
+      let newItem: Item = new Item(this.checklistID, this.itemText, false);
       this.checklistItems.push(newItem);
       this.itemText = "";
       this.showAddItem = false;
@@ -58,9 +54,9 @@ export class ChecklistPageComponent implements OnInit {
       this.showReset = false;
       this.checklistItems.forEach(item => {
         item.isChecked = false;
-        item.textDecoration = 'none';
       });
     }
+    this.countItemsLeft();
   }
 
   showAdd() {
@@ -68,5 +64,21 @@ export class ChecklistPageComponent implements OnInit {
   }
   resetChecklist() {
     this.showReset = true;
+  }
+
+  changeState(item: Item) {
+    item.isChecked = !item.isChecked;
+    this.countItemsLeft();
+  }
+
+  countItemsLeft() {
+    let filteredList = this.checklistItems.filter(item => {
+      return !item.isChecked;
+    });
+    if (filteredList.length > 0) {
+      this.itemsLeft = `${filteredList.length} items left`
+    } else {
+      this.itemsLeft = "List complete!"
+    }
   }
 }
