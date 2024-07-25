@@ -24,7 +24,7 @@ constructor(
 ) {}
   ngOnInit(): void {
     let storedUsername: string | null = this.localStore.getData('username');
-    if (storedUsername.length > 0) {
+    if (storedUsername != null) {
       console.log(`Found username '${storedUsername}' in local storage.`);
       this.username = storedUsername;
       if (this.username === 'Ryan') {
