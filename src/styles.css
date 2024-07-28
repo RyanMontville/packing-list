@@ -27,6 +27,13 @@ body {
     color: var(--main-color);
     transition: 0.2s linear;
 }
+.header-icon {
+    font-size: 50px;
+}
+.header-icon-click {
+    font-size: 50px;
+    cursor: pointer;
+}
 
 main {
     max-width: 900px;

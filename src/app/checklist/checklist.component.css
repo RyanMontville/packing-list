@@ -4,7 +4,11 @@
     text-align: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+}
+
+#Checklist-header a {
+    color: var(--main-color);
 }
 
 h2 {
@@ -35,6 +39,7 @@ h3 {
 }
 
 input[type="text"],
+input[type="date"],
 select {
     width: 95%;
     margin: 0 auto;
@@ -49,6 +54,14 @@ select {
     padding: 10px 20px;
     border-top: 1px solid darkgray;
     font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#date-reset {
+    flex-grow: 1;
+    text-align: center;
 }
 
 #done-items h2 {

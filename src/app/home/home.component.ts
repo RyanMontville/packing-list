@@ -18,6 +18,7 @@ userID: number = 0;
 users: {ID: number, username: string}[] = [{ID: 0, username: 'Ryan'}, {ID: 1, username: 'JT'}];
 userLists: {ID: number, title: string}[] = [];
 usernameResopnse: string = "";
+newListName: string = "";
 constructor(
   private router: Router,
   private localStore: LocalService
@@ -60,6 +61,9 @@ onSubmit(action: number) {
       console.log("something went wrong.");
     }
     this.askForUsername = false;
+  }
+  if (action === 1) {
+    this.userLists.push({ID: 5, title: this.newListName})
   }
 }
 }

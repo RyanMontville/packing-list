@@ -1,8 +1,13 @@
 <main>
     @if (!askForUsername) {
         <section id="app-header">
+            <span class="material-symbols-outlined header-icon">
+                checklist
+                </span>
             <h1>Logged in as {{username}}</h1>
-            <button (click)="askForUsername = true">switch users</button>
+            <span class="material-symbols-outlined header-icon-click" (click)="askForUsername = true">
+                settings_account_box
+                </span>
         </section>
         <section id="list-of-lists">
             @for (list of userLists; track list) {
@@ -21,13 +26,16 @@
             </div>
         }
         @if (showCreateNewList) {
-            
+            <div class="list-name">
+                <input [(ngModel)]="newListName" type="text" placeholder="Enter the title for the list" class="inputBar"
+                (keydown.enter)="onSubmit(1)" id="createNewListBar" />
+            </div>
         }
     }
     @if (askForUsername) {
         <div class="list-name">
-            <input [(ngModel)]="usernameResopnse" type="text" placeholder="Enter your username" class="Search-input"
-            (keydown.enter)="onSubmit(0)" id="setUserBox" />
+            <input [(ngModel)]="usernameResopnse" type="text" placeholder="Enter your username" class="inputBar"
+            (keydown.enter)="onSubmit(0)" id="setUserBar" />
         </div>
     }
 </main>

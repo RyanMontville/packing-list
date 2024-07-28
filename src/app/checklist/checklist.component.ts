@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Item } from '../item.model';
 import { FormsModule } from '@angular/forms';
-import { NgStyle } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 
 @Component({
-  selector: 'app-checklist-page',
+  selector: 'app-checklist',
   standalone: true,
-  imports: [FormsModule, NgStyle],
-  templateUrl: './checklist-page.component.html',
-  styleUrl: './checklist-page.component.css'
+  imports: [FormsModule, NgStyle, CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './checklist.component.html',
+  styleUrl: './checklist.component.css'
 })
-export class ChecklistPageComponent implements OnInit {
+export class ChecklistComponent implements OnInit {
   checklistID: number = 0;
   checklistName: string = "";
   dateLeaving: string = "";

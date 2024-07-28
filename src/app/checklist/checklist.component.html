@@ -1,7 +1,7 @@
 @if (!showReset) {
 <main>
     <section id="Checklist-header">
-        <a routerLink="/" class="btn"><span class="material-symbols-outlined">
+        <a routerLink="/" class="btn"><span class="material-symbols-outlined header-icon-click">
                 arrow_back
             </span></a>
         <span>
@@ -9,16 +9,18 @@
             <h3>Leaving: {{dateLeaving}}</h3>
             <h3>{{itemsLeft}}</h3>
         </span>
-        <button (click)="resetChecklist()" class="btn">Reset</button>
+        <span class="material-symbols-outlined header-icon-click" (click)="resetChecklist()">
+            restart_alt
+        </span>
     </section>
     <section id="list">
         @for (item of checklistItems; track item) {
-            @if (!item.isChecked) {
-                <div class="item" (click)="changeState(item)">
-                    <span class="material-symbols-outlined">check_box_outline_blank</span>
-                    <p>{{item.itemName}}</p>
-                </div>
-            }
+        @if (!item.isChecked) {
+        <div class="item" (click)="changeState(item)">
+            <span class="material-symbols-outlined">check_box_outline_blank</span>
+            <p>{{item.itemName}}</p>
+        </div>
+        }
         }
         @if (!showAddItem) {
         <div class="item" (click)="showAdd()">
@@ -38,14 +40,14 @@
     <section id="done-items">
         <h2>Completed</h2>
         @for (item of checklistItems; track item) {
-            @if (item.isChecked) {
-                <div class="item" (click)="changeState(item)">
-                    <span class="material-symbols-outlined green">
-                        check_box
-                    </span>
-                    <p>{{item.itemName}}</p>
-                </div>
-            }
+        @if (item.isChecked) {
+        <div class="item" (click)="changeState(item)">
+            <span class="material-symbols-outlined green">
+                check_box
+            </span>
+            <p>{{item.itemName}}</p>
+        </div>
+        }
 
         }
     </section>
@@ -57,9 +59,13 @@
         <h2>{{checklistName}}</h2>
     </section>
     <div id="reset-box">
-        <h3>When are you leaving?</h3>
-        <input [(ngModel)]="dateLeaving" type="date" placeholder="Enter date you are leaving" class="Search-input"
-            (keydown.enter)="onSubmit(1)" id="dateInputBox" />
+        <span id="date-reset">
+            <h3>When are you leaving?</h3>
+        <input [(ngModel)]="dateLeaving" type="date" placeholder="Enter date you are leaving" class="Search-input" id="dateInputBox" />
+        </span>
+        <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(1)">
+            check
+        </span>
     </div>
 </main>
 }
