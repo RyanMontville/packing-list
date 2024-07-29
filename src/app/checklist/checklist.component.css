@@ -38,18 +38,6 @@ h3 {
     color: green;
 }
 
-input[type="text"],
-input[type="date"],
-select {
-    width: 95%;
-    margin: 0 auto;
-    padding: 12px 20px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
 #reset-box {
     padding: 10px 20px;
     border-top: 1px solid darkgray;

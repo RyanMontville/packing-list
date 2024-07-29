@@ -17,7 +17,7 @@ export class ChecklistComponent implements OnInit {
   dateLeaving: string = "";
   checklistItems: Item[] = [];
   itemText: string = "";
-  showAddItem: boolean = false;
+  editList: boolean = false;
   showReset: boolean = false;
   itemsLeft: string = "";
 
@@ -35,11 +35,14 @@ export class ChecklistComponent implements OnInit {
       this.dateLeaving = "August 1st, 2024"
       this.checklistItems = [new Item(0, 'Dog bowls', false), new Item(0,'Dog food', false), new Item(0, 'Dog medicine', false)];
     } else if (this.checklistID === 1) {
-      this.checklistName = "Florida List"
+      this.checklistName = "Florida List";
       this.showReset = true;
     } else if (this.checklistID == 2) {
       this.checklistName = "Back to Chicago";
       this.checklistItems = [new Item(2, 'laptop', false), new Item(2, '2nd monitor', false), new Item(2, "Rufus's bowls", false), new Item(2, 'kobo', false)];
+    } else {
+      this.checklistName = "List you just created";
+      this.showReset = true;
     }
     this.countItemsLeft();
   }
@@ -49,7 +52,6 @@ export class ChecklistComponent implements OnInit {
       let newItem: Item = new Item(this.checklistID, this.itemText, false);
       this.checklistItems.push(newItem);
       this.itemText = "";
-      this.showAddItem = false;
     } else {
       this.showReset = false;
       this.checklistItems.forEach(item => {
@@ -59,9 +61,6 @@ export class ChecklistComponent implements OnInit {
     this.countItemsLeft();
   }
 
-  showAdd() {
-    this.showAddItem = true;
-  }
   resetChecklist() {
     this.showReset = true;
   }
@@ -80,5 +79,12 @@ export class ChecklistComponent implements OnInit {
     } else {
       this.itemsLeft = "List complete!"
     }
+  }
+
+  deleteItem(itemToDelete: Item) {
+    let checklistMinusItem = this.checklistItems.filter(item => {
+      return item !== itemToDelete;
+    });
+    this.checklistItems = checklistMinusItem;
   }
 }

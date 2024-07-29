@@ -12,8 +12,8 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 export class TtsListComponent {
   uttr!: SpeechSynthesisUtterance;
   currentIndex: number = 0;
-  items: string[] = ['Bowls', 'Coffee Carafe', 'Coffee Cups', 'Hand soap', 'Dishwashing Soap', 'Hand Wipes', 'Kitchen Towels', 'Oven Mitt', 'Pot Holders', 'Salt Pepper Creole Sugar', 'Spatulas & Serving Spoons/Fork', 'Kitchen Grocery Trash Bags', 'Knifes', "Mabel's bag", 'Marshmallow sticks', 'Paper towels', 'Percolator', 'Plate holders', 'Plates', 'Red Solo Cups', 'Silverware', 'Tablecloth', 'Air mattress and pump', 'Allergy Nose Spray', 'Backpack', 'Baseball Caps', 'Bathroom Bag', 'Battery charger and cables', 'Beer', 'Bikes - Helmets', 'Binoculars/bag', 'Blanket for dogs', 'Blanket for under mattress', 'Blankets', 'Bug Spray', 'Camera', 'Camp Chairs', '"Change of clothes', 'Contigo Mugs', 'Cooler', 'Cots', 'Creamer', 'Creamer', 'Cups', 'Dog Backpack', 'Dog beds', 'Dog bowls', 'Dog food', 'Dog leashes', 'Dog rope/caribiners', 'Dog Towels', 'Dog treats', 'Dog water', 'First Aid Kit', '"Flashlights - tent', '"Food', 'Ground Coffee', 'Hand Axe', 'Hiking shoes', 'Ice', 'Ice Packs', 'Kayak shoes', 'Kayaks', 'Kindling', 'LED camp lights', 'Lighter', 'Locks', 'Luxardo whiskey sours', '"Mabel', '"Marshmallows', 'Nut Sacks', '"Paddles', 'Pillows', 'Rain gear', 'Screenhouse frame', 'Screenhouse screens and top', 'Screenhouse tarp', 'Sheets', 'Sleeping bag', 'Sleeping pads', 'Sunscreen', 'Swim shoes', 'Swimsuit', 'Table', 'Tent', '"Tent bag - Tarps', 'Tent Poles', 'Toilet Chair', 'Toilet Liners', 'Toilet Paper', 'Tool Box', 'Towel', 'Trailer Tools', 'Water', 'Wood', 'Work Gloves x2', 'Yellow Jacket Spray'];
-  currentItem: string = this.items[this.currentIndex]
+  steps: string[] = ['Raise stabilizer jacks', 'Put pads in blue bucket', 'Put on weight distribution hitch', 'Raise trailer tongue', 'Back up to align', 'Lower on to pilot', 'Latch tongue with coupling pin', 'Criss cross attach chains', 'Manual crank Raise high for ease of bars', 'Loosen sway bolt with Allen wrench', 'Adjust wings to be in line with trailer', 'Attach bars and pins', 'Lower and retract tongue jack', 'Attach emergency brake cable to car', 'Verify emergency brake pin in place on trailer', 'Verify battery connected (red quick disconnect connection)', 'Attach 7 way connector - make sure it cannot drag', 'Stow drill, Allen wrench, WD lever, and pads', 'Remove and stow chocks'];
+  currentItem: string = this.steps[this.currentIndex]
 
   constructor() {
     this.uttr = new SpeechSynthesisUtterance();
@@ -21,9 +21,9 @@ export class TtsListComponent {
   }
 
   readList() {
-    this.uttr.text = this.items[this.currentIndex];
+    this.uttr.text = this.steps[this.currentIndex];
     window.speechSynthesis.speak(this.uttr);
     this.currentIndex += 1;
-    this.currentItem = this.items[this.currentIndex];
+    this.currentItem = this.steps[this.currentIndex];
   }
 }

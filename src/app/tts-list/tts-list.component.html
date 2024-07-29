@@ -1,5 +1,12 @@
-<section>
-    <a routerLink="/">Home</a>
-    <h3>{{currentItem}}</h3>
-    <button (click)="readList()">Read next item</button>
-</section>
+<main>
+    <section>
+        <div id="header">
+            <a routerLink="/" class="link"><span class="material-symbols-outlined header-icon-click">
+                    arrow_back
+                </span></a>
+            <h2>Hooking up the Camper</h2>
+        </div>
+        <h3>{{currentItem}}</h3>
+        <button (click)="readList()">Read next item</button>
+    </section>
+</main>

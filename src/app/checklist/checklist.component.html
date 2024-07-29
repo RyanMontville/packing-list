@@ -1,19 +1,20 @@
 @if (!showReset) {
 <main>
     <section id="Checklist-header">
-        <a routerLink="/" class="btn"><span class="material-symbols-outlined header-icon-click">
-                arrow_back
-            </span></a>
+        <a routerLink="/" class="btn"><span class="material-symbols-outlined header-icon-click">arrow_back</span></a>
         <span>
             <h2>{{checklistName}}</h2>
             <h3>Leaving: {{dateLeaving}}</h3>
             <h3>{{itemsLeft}}</h3>
         </span>
-        <span class="material-symbols-outlined header-icon-click" (click)="resetChecklist()">
-            restart_alt
-        </span>
+        <span class="material-symbols-outlined header-icon-click" (click)="resetChecklist()">restart_alt</span>
     </section>
+    @if (!editList) {
     <section id="list">
+        <div class="item" (click)="editList = true">
+            <span class="material-symbols-outlined">edit_note</span>
+            <p>Edit List</p>
+        </div>
         @for (item of checklistItems; track item) {
         @if (!item.isChecked) {
         <div class="item" (click)="changeState(item)">
@@ -22,21 +23,7 @@
         </div>
         }
         }
-        @if (!showAddItem) {
-        <div class="item" (click)="showAdd()">
-            <span class="material-symbols-outlined">
-                add
-            </span>
-            <p>Add item to list</p>
-        </div>
-        }
     </section>
-    @if (showAddItem) {
-    <section class="item">
-        <input [(ngModel)]="itemText" type="text" placeholder="Enter item to add to list" class="Search-input"
-            (keydown.enter)="onSubmit(0)" id="addItemBox" />
-    </section>
-    }
     <section id="done-items">
         <h2>Completed</h2>
         @for (item of checklistItems; track item) {
@@ -48,11 +35,34 @@
             <p>{{item.itemName}}</p>
         </div>
         }
-
         }
     </section>
+    }
+    @if (editList) {
+        <section id="list">
+            <div class="item" (click)="editList = false">
+                <span class="material-symbols-outlined">cancel</span>
+                <p>Done editing list</p>
+            </div>
+            @for (item of checklistItems; track item) {
+                <div class="item" (click)="deleteItem(item)">
+                    <span class="material-symbols-outlined">remove</span>
+                    <p>Remove '{{item.itemName}}'</p>
+                </div>
+            }
+                <section class="item">
+                    <span class="material-symbols-outlined header-icon-click" (click)="itemText = ''">close</span>
+                    <input [(ngModel)]="itemText" type="text" placeholder="Enter item to add to list" class="Search-input"
+                        (keydown.enter)="onSubmit(0)" id="addItemBox" />
+                    <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(0)">
+                        check
+                    </span>
+                </section>
+        </section>
+    }
 </main>
 }
+
 @if (showReset) {
 <main>
     <section id="Checklist-header">
@@ -61,11 +71,10 @@
     <div id="reset-box">
         <span id="date-reset">
             <h3>When are you leaving?</h3>
-        <input [(ngModel)]="dateLeaving" type="date" placeholder="Enter date you are leaving" class="Search-input" id="dateInputBox" />
+            <input [(ngModel)]="dateLeaving" type="date" placeholder="Enter date you are leaving" class="Search-input"
+                id="dateInputBox" />
         </span>
-        <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(1)">
-            check
-        </span>
+        <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(1)">check</span>
     </div>
 </main>
 }

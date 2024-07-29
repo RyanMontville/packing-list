@@ -51,3 +51,21 @@ h3,
 h4 {
     font-family: 'Roboto';
 }
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 95%;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.link {
+    color: var(--main-color);
+    text-decoration: none;
+    cursor: pointer;
+}

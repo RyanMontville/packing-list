@@ -15,3 +15,15 @@ button {
     height: 300px;
     margin: 20px 0;
 }
+
+#header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+#header h2 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 50px;
+}
