@@ -67,4 +67,8 @@ onSubmit(action: number) {
     this.userLists.push({ID: 5, title: this.newListName})
   }
 }
+
+reloadApp() {
+  window.location.reload();
+}
 }

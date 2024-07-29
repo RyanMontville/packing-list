@@ -27,3 +27,7 @@ button {
     text-align: center;
     font-size: 50px;
 }
+
+#voice-list {
+    padding: 10px;
+}
