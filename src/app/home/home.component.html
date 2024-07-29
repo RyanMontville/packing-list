@@ -15,7 +15,9 @@
                     <a (click)="goToList(list.ID)">{{list.title}}</a>
                 </div>
             }
-            
+            <div class="list-name">
+                <a routerLink="/tts">Text to speech test</a>
+            </div>
         </section>
         @if (!showCreateNewList) {
             <div id="new-list-link" (click)="showCreateNewList = true">
