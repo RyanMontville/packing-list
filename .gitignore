@@ -41,4 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# node.js files
 /node-postgres-api/node_modules
+/node-postgres-api/db.js
