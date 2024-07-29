@@ -6,6 +6,7 @@
                 </span></a>
             <h2>Hooking up the Camper</h2>
         </div>
+        <h3>Number of voices found: {{numberOfVoicesFound}}</h3>
         @if (deviceHasTTS) {
             <select [(ngModel)]="selectedVoice">
                 @for (voice of voices; track voice) {
@@ -26,7 +27,7 @@
     </section>
     <div id="voice-list">
         @for (voice of voices; track voice) {
-            <p>{{voice.name}} - {{voice.lang}} - {{voice.voiceURI}}</p>
+            <p>{{voice.name}}</p>
             <br/>
             <hr />
             <br/>

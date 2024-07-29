@@ -19,6 +19,7 @@ export class TtsListComponent implements OnInit {
   voices!: SpeechSynthesisVoice[];
   selectedVoice!: SpeechSynthesisVoice;
   deviceHasTTS: boolean = true;
+  numberOfVoicesFound: number = 0;
 
 
 
@@ -27,8 +28,9 @@ export class TtsListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.voices = speechSynthesis.getVoices();
+    this.numberOfVoicesFound = this.voices.length;
     if (this.voices.length > 0) {
-      this.selectedVoice = this.voices[0]
+      this.selectedVoice = this.voices[0];
     } else {
       this.deviceHasTTS = false;
     }

@@ -1,10 +1,10 @@
 <main>
     @if (!askForUsername) {
         <section id="app-header">
-            <span class="material-symbols-outlined header-icon">
+            <span class="material-symbols-outlined header-icon" (click)="reloadApp()">
                 checklist
                 </span>
-            <h1 (click)="reloadApp()">Logged in as {{username}}</h1>
+            <h1>Logged in as {{username}}</h1>
             <span class="material-symbols-outlined header-icon-click" (click)="askForUsername = true">
                 settings_account_box
                 </span>
