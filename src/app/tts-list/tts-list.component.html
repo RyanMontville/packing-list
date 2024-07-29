@@ -6,13 +6,7 @@
                 </span></a>
             <h2>Hooking up the Camper</h2>
         </div>
-        <h3>Number of voices found: {{numberOfVoicesFound}}</h3>
         @if (deviceHasTTS) {
-            <select [(ngModel)]="selectedVoice">
-                @for (voice of voices; track voice) {
-                    <option [ngValue]="voice">{{voice.name}}</option>
-                }
-            </select>
             @if (!checklistComplete) {
                 <h3>{{currentItem}}</h3>
                 <button (click)="readList()">Read next item</button>
@@ -25,12 +19,4 @@
             <p>Sorry, it looks like your device doesn't support text-to-speech.</p>
         }
     </section>
-    <div id="voice-list">
-        @for (voice of voices; track voice) {
-            <p>{{voice.name}}</p>
-            <br/>
-            <hr />
-            <br/>
-        }
-    </div>
 </main>
