@@ -1,0 +1,17 @@
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+section a,
+section h3 {
+    color: var(--main-color);
+    font-size: 30px;
+}
+button {
+    width: 80%;
+    display: block;
+    height: 300px;
+    margin: 20px 0;
+}
