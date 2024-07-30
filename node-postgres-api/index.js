@@ -5,6 +5,9 @@ const port = 3000;
 
 app.use(express.json());
 
+var cors = require('cors');
+app.use(cors({origin: 'http://localhost:4200'}));
+
 // Get all users
 app.get('/users', async (req, res) => {
   try {
@@ -28,11 +31,11 @@ app.get('/users/:id', async (req, res) => {
 
 // Create a new user
 app.post('/users', async (req, res) => {
-  const { username, user_key } = req.body;
+  const { username } = req.body;
   try {
     const result = await pool.query(
-      'INSERT INTO public.users(username, user_key) VALUES (?, ?) RETURNING user_id;',
-      [username, user_key]
+      'INSERT INTO public.users(username) VALUES ($1) RETURNING *;',
+      [username]
     );
     res.json(result.rows[0]);
   } catch (err) {

@@ -4,8 +4,8 @@
             <span class="material-symbols-outlined header-icon" (click)="reloadApp()">
                 checklist
                 </span>
-            <h1>Logged in as {{username}}</h1>
-            <span class="material-symbols-outlined header-icon-click" (click)="askForUsername = true">
+            <h1>Logged in as {{user.username}}: {{user.user_id}}</h1>
+            <span class="material-symbols-outlined header-icon-click" (click)="logInAsDifferentUser()">
                 settings_account_box
                 </span>
         </section>

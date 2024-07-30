@@ -9,17 +9,28 @@ export class LocalService {
   constructor() { }
 
   public saveData(key: string, value: string) {
-    localStorage.setItem(key, value);
+    let convertedValue = this.convertToBase64(value);
+    localStorage.setItem(key, convertedValue);
   }
 
   public getData(key: string) {
-    return localStorage.getItem(key)
+    let value = localStorage.getItem(key);
+    let notNullValue = "";
+    if (value) {
+      notNullValue = value;
+    }
+    return this.convertBackToString(notNullValue);
+     
   }
   public removeData(key: string) {
     localStorage.removeItem(key);
   }
 
-  public clearData() {
-    localStorage.clear();
+  public convertToBase64(username: string) {
+    return btoa(username);
+  }
+
+  public convertBackToString(convertedUsername: string) {
+    return atob(convertedUsername);
   }
 }

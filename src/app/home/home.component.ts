@@ -3,6 +3,8 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { LocalService } from '../local.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PackingService } from '../packing.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-home',
@@ -14,33 +16,33 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit {
 showCreateNewList: boolean = false;
 askForUsername: boolean = false;
-username: string = "";
-userID: number = 0;
-users: {ID: number, username: string}[] = [{ID: 0, username: 'Ryan'}, {ID: 1, username: 'JT'}];
-userLists: {ID: number, title: string}[] = [];
+user: User = new User(-1,"loading...")
 usernameResopnse: string = "";
+
+//delete these
+userLists: {ID: number, title: string}[] = [];
 newListName: string = "";
+//end of deletes
+
 constructor(
   private router: Router,
-  private localStore: LocalService
+  private localStore: LocalService,
+  private packingService: PackingService
 ) {}
   ngOnInit(): void {
     let storedUsername: string | null = this.localStore.getData('username');
     if (storedUsername != null) {
-      console.log(`Found username '${storedUsername}' in local storage.`);
-      this.username = storedUsername;
-      if (this.username === 'Ryan') {
-        this.userID = 0;
-        this.userLists = [{ID: 2, title: 'Back to Chicago'}];
-      }
-      if (this.username === 'JT') {
-        this.userID = 1;
-        this.userLists = [{ID: 0, title: 'Camping Checklist'}, {ID: 1, title: 'Florida List'}];
-      }
+      this.packingService.getUserByUsername(storedUsername).subscribe(data => {
+        this.user = data;
+      });
     } else {
-      console.log("Username not in local storage.")
       this.askForUsername = true;
     }
+  }
+
+  logInAsDifferentUser() {
+    this.askForUsername = true;
+    this.usernameResopnse = "";
   }
 
 goToList(checklistID: number) {
@@ -50,21 +52,24 @@ onSubmit(action: number) {
   if (action === 0) {
     this.localStore.removeData('username');
     this.localStore.saveData('username', this.usernameResopnse);
-    let user = this.users.find(user => {
-      return user.username === this.usernameResopnse;
+    let response!: User;
+    this.packingService.getUserByUsername(this.usernameResopnse).subscribe(data => {
+      if (data) {
+        this.user = data;
+        this.askForUsername = false;
+      } else {
+        let userToAdd = new User(0, this.usernameResopnse);
+        this.packingService.createNewUser(userToAdd).subscribe(data => {
+          this.user = data;
+          this.askForUsername = false;
+        });
+      }
     });
-    if (user) {
-      this.userID = user.ID;
-      this.username = this.usernameResopnse;
-      console.log("sucess");
-      window.location.reload();
-    } else {
-      console.log("something went wrong.");
-    }
-    this.askForUsername = false;
+    
+    
   }
   if (action === 1) {
-    this.userLists.push({ID: 5, title: this.newListName})
+    // create new list code goes here
   }
 }
 

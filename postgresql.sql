@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS users, lists, items;
 CREATE TABLE users (
 	user_id serial,
 	username text NOT NULL UNIQUE,
-	user_key text NOT NULL UNIQUE,
 	CONSTRAINT pk_users PRIMARY KEY(user_id)
 );
 
