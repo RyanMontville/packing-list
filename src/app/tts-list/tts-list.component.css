@@ -9,7 +9,7 @@ section h3 {
     color: var(--main-color);
     font-size: 30px;
 }
-button {
+.tts-button {
     width: 80%;
     display: block;
     height: 70vh;
@@ -30,4 +30,8 @@ button {
 
 #voice-list {
     padding: 10px;
+}
+
+.tts-button .material-symbols-outlined {
+    font-size: 20vw !important;
 }

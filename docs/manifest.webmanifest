@@ -1,8 +1,8 @@
 {
-  "name": "packing-list",
-  "short_name": "packing-list",
-  "theme_color": "#b81f24",
-  "background_color": "#ffffff",
+  "name": "packing-local-storage",
+  "short_name": "packing-local-storage",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

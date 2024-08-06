@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PackingService } from '../packing.service';
 import { User } from '../user.model';
+import { List } from '../list.model';
 
 @Component({
   selector: 'app-home',
@@ -17,12 +18,10 @@ export class HomeComponent implements OnInit {
 showCreateNewList: boolean = false;
 askForUsername: boolean = false;
 user: User = new User(-1,"loading...")
+allUsers: User[] = [];
 usernameResopnse: string = "";
-
-//delete these
-userLists: {ID: number, title: string}[] = [];
+userLists: List[] = [];
 newListName: string = "";
-//end of deletes
 
 constructor(
   private router: Router,
@@ -30,14 +29,26 @@ constructor(
   private packingService: PackingService
 ) {}
   ngOnInit(): void {
-    let storedUsername: string | null = this.localStore.getData('username');
+    this.packingService.getAllUsers().subscribe(data => {
+      this.allUsers = data;
+      let storedUsername: string | null = this.localStore.getData('username');
     if (storedUsername != null) {
-      this.packingService.getUserByUsername(storedUsername).subscribe(data => {
-        this.user = data;
+      let foundUser = this.allUsers.find(user => {
+        return user.username === storedUsername;
       });
+      if (foundUser) {
+        this.user = foundUser;
+        this.packingService.getListsForUserID(this.user.user_id).subscribe(data => {
+          this.userLists = data;
+        });
+      } else {
+        let newUser: User = new User(0, storedUsername);
+        this.packingService.createNewUser(newUser);
+      }
     } else {
       this.askForUsername = true;
     }
+    });
   }
 
   logInAsDifferentUser() {
@@ -52,24 +63,15 @@ onSubmit(action: number) {
   if (action === 0) {
     this.localStore.removeData('username');
     this.localStore.saveData('username', this.usernameResopnse);
-    let response!: User;
-    this.packingService.getUserByUsername(this.usernameResopnse).subscribe(data => {
-      if (data) {
-        this.user = data;
-        this.askForUsername = false;
-      } else {
-        let userToAdd = new User(0, this.usernameResopnse);
-        this.packingService.createNewUser(userToAdd).subscribe(data => {
-          this.user = data;
-          this.askForUsername = false;
-        });
-      }
-    });
-    
-    
+    setTimeout(() => {
+      this.reloadApp();
+    }, 100);
   }
   if (action === 1) {
-    // create new list code goes here
+    let newList: List = new List(0, this.user.user_id, this.newListName, '');
+    this.packingService.createNewList(newList).subscribe(data => {
+      console.log(data);
+    })
   }
 }
 

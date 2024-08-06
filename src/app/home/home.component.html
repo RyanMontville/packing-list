@@ -1,23 +1,20 @@
 <main>
     @if (!askForUsername) {
         <section id="app-header">
-            <span class="material-symbols-outlined header-icon" (click)="reloadApp()">
+            <button class="material-symbols-outlined header-icon" (click)="reloadApp()">
                 checklist
-                </span>
-            <h1>Logged in as {{user.username}}: {{user.user_id}}</h1>
-            <span class="material-symbols-outlined header-icon-click" (click)="logInAsDifferentUser()">
+            </button>
+            <h1>Logged in as {{user.username}}</h1>
+            <button class="material-symbols-outlined header-icon-click" (click)="logInAsDifferentUser()">
                 settings_account_box
-                </span>
+            </button>
         </section>
         <section id="list-of-lists">
             @for (list of userLists; track list) {
                 <div class="list-name">
-                    <p><a (click)="goToList(list.ID)">{{list.title}}</a></p>
+                    <p><a (click)="goToList(list.list_id)">{{list.list_name}}</a></p>
                 </div>
             }
-            <div class="list-name">
-                <p><a routerLink="/tts" class="link">Text to speech test</a></p>
-            </div>
         </section>
         @if (!showCreateNewList) {
             <div class="list-name" (click)="showCreateNewList = true">

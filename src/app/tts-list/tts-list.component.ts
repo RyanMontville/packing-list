@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
+import { PackingService } from '../packing.service';
+import { Item } from '../item.model';
 
 @Component({
   selector: 'app-tts-list',
@@ -12,10 +14,11 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class TtsListComponent implements OnInit {
   uttr!: SpeechSynthesisUtterance;
+  listTitle: string = "";
   currentIndex: number = 0;
   checklistComplete: boolean = false;
-  steps: string[] = ['Raise stabilizer jacks', 'Put pads in blue bucket', 'Put on weight distribution hitch', 'Raise trailer tongue', 'Back up to align', 'Lower on to pilot', 'Latch tongue with coupling pin', 'Criss cross attach chains', 'Manual crank Raise high for ease of bars', 'Loosen sway bolt with Allen wrench', 'Adjust wings to be in line with trailer', 'Attach bars and pins', 'Lower and retract tongue jack', 'Attach emergency brake cable to car', 'Verify emergency brake pin in place on trailer', 'Verify battery connected (red quick disconnect connection)', 'Attach 7 way connector - make sure it cannot drag', 'Stow drill, Allen wrench, WD lever, and pads', 'Remove and stow chocks', 'Checklist completed'];
-  currentItem: string = this.steps[0];
+  itemsToRead: Item[] = [];
+  currentItem: string = "";
   voices!: SpeechSynthesisVoice[];
   selectedVoice!: SpeechSynthesisVoice;
   deviceHasTTS: boolean = true;
@@ -23,10 +26,27 @@ export class TtsListComponent implements OnInit {
   preferrdVoices: string[] = ['English (United States)', 'Microsoft Zira - English (United States)', 'Moira'];
 
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private packingService: PackingService
+  ) {
     this.uttr = new SpeechSynthesisUtterance();
   }
   ngOnInit(): void {
+    let paramID = this.route.snapshot.paramMap.get('id');
+    if (paramID != null) {
+      this.packingService.getItemsForListID(+paramID).subscribe(data => {
+        this.itemsToRead = data;
+        if (this.itemsToRead.length === 0) {
+          this.checklistComplete = true;
+        } else {
+          this.currentItem = this.itemsToRead[0].item_name;
+        }
+      });
+      this.packingService.getListForID(+paramID).subscribe(data => {
+        this.listTitle = data[0].list_name;
+      });
+    }
     this.getVoices();
     if (!this.deviceHasTTS) {
       setTimeout(() => {
@@ -61,13 +81,18 @@ export class TtsListComponent implements OnInit {
 
   readList() {
     this.uttr.voice = this.selectedVoice;
-    let currentStep = this.steps[this.currentIndex];
-    this.readItem(currentStep);
-    if (this.currentIndex === this.steps.length - 1) {
+    let currentStep = this.itemsToRead[this.currentIndex];
+    this.readItem(currentStep.item_name);
+    if (this.currentIndex === this.itemsToRead.length - 1) {
       this.checklistComplete = true;
     } else {
       this.currentIndex += 1;
-      this.currentItem = this.steps[this.currentIndex];
+      this.currentItem = this.itemsToRead[this.currentIndex].item_name;
     }
+  }
+
+  startFromTop() {
+    this.currentIndex = 0;
+    this.currentItem = this.itemsToRead[0].item_name;
   }
 }

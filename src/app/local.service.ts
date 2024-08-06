@@ -20,8 +20,8 @@ export class LocalService {
       notNullValue = value;
     }
     return this.convertBackToString(notNullValue);
-     
   }
+  
   public removeData(key: string) {
     localStorage.removeItem(key);
   }

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } fr
 import { Item } from '../item.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgStyle } from '@angular/common';
+import { List } from '../list.model';
+import { PackingService } from '../packing.service';
 
 @Component({
   selector: 'app-checklist',
@@ -12,79 +14,117 @@ import { CommonModule, NgStyle } from '@angular/common';
   styleUrl: './checklist.component.css'
 })
 export class ChecklistComponent implements OnInit {
-  checklistID: number = 0;
-  checklistName: string = "";
-  dateLeaving: string = "";
-  checklistItems: Item[] = [];
-  itemText: string = "";
+  singleList: List = new List(-1, -1,'Loading...', '')
+  listID: number = -1;
+  listItems: Item[] = [];
+  newItemName: string = "";
+  daysUntilLeaving: number = 0;
+  setNewDate: boolean = false;
+  initialDateSet: boolean = true;
+
+
   editList: boolean = false;
-  showReset: boolean = false;
   itemsLeft: string = "";
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private packingService: PackingService) { }
 
   ngOnInit(): void {
     let paramID = this.route.snapshot.paramMap.get('id');
     if (paramID != null) {
-      this.checklistID = +paramID;
+      this.listID = +paramID;
+      this.packingService.getListForID(+paramID).subscribe(data => {
+        this.singleList = data[0];
+        if (this.singleList.date_leaving === null) {
+          this.setNewDate = true;
+          this.initialDateSet = false;
+        } else {
+          this.calculateDaysLeft();
+        }
+        this.packingService.getItemsForListID(+paramID).subscribe(data => {
+          this.listItems = data;
+        });
+        this.countItemsLeft();
+      });
     }
-    if (this.checklistID === 0) {
-      this.checklistName = "Camping Checklist";
-      this.dateLeaving = "August 1st, 2024"
-      this.checklistItems = [new Item(0, 'Dog bowls', false), new Item(0,'Dog food', false), new Item(0, 'Dog medicine', false)];
-    } else if (this.checklistID === 1) {
-      this.checklistName = "Florida List";
-      this.showReset = true;
-    } else if (this.checklistID == 2) {
-      this.checklistName = "Back to Chicago";
-      this.checklistItems = [new Item(2, 'laptop', false), new Item(2, '2nd monitor', false), new Item(2, "Rufus's bowls", false), new Item(2, 'kobo', false)];
-    } else {
-      this.checklistName = "List you just created";
-      this.showReset = true;
-    }
-    this.countItemsLeft();
   }
 
   onSubmit(action: number) {
     if (action === 0) {
-      let newItem: Item = new Item(this.checklistID, this.itemText, false);
-      this.checklistItems.push(newItem);
-      this.itemText = "";
-    } else {
-      this.showReset = false;
-      this.checklistItems.forEach(item => {
-        item.isChecked = false;
+      let newItem: Item = new Item(0, this.listID, this.newItemName, false, false);
+      this.packingService.addItemToList(newItem).subscribe(data => {
+        this.listItems.push(data);
       });
+      this.newItemName = "";
+    } else {
+      //change or set date leaving
+      console.log(this.singleList.date_leaving);
+      this.packingService.updateLeavingDate(this.singleList).subscribe(data => {
+        this.singleList = data;
+        this.calculateDaysLeft();
+      });
+      if (this.initialDateSet) {
+        //reset all items to unchecked if the list already had a date before changing
+        this.listItems.forEach(item => {
+          item.is_item_checked = false;
+          this.packingService.updateItemIsChecked(item).subscribe(data => {
+            item = data;
+          });
+        });
+      } else {
+        this.initialDateSet = true;
+      }
+      this.setNewDate = false;
+      this.countItemsLeft();
     }
-    this.countItemsLeft();
   }
 
   resetChecklist() {
-    this.showReset = true;
+    this.setNewDate = true;
   }
 
   changeState(item: Item) {
-    item.isChecked = !item.isChecked;
-    this.countItemsLeft();
+    item.is_item_checked = !item.is_item_checked;
+    this.packingService.updateItemIsChecked(item).subscribe(data => {
+      console.log(data);
+      this.countItemsLeft();
+    });
   }
 
   countItemsLeft() {
-    let filteredList = this.checklistItems.filter(item => {
-      return !item.isChecked;
-    });
-    if (filteredList.length > 0) {
-      this.itemsLeft = `${filteredList.length} items left`
+    if (this.listItems.length === 0) {
+      this.itemsLeft = "No items on list yet."
     } else {
-      this.itemsLeft = "List complete!"
+      let filteredList = this.listItems.filter(item => {
+        return !item.is_item_checked;
+      });
+      if (filteredList.length > 0) {
+        this.itemsLeft = `${filteredList.length} items left`
+      } else {
+        this.itemsLeft = "List complete!"
+      }
     }
   }
 
   deleteItem(itemToDelete: Item) {
-    let checklistMinusItem = this.checklistItems.filter(item => {
-      return item !== itemToDelete;
+    this.packingService.markItemDeleted(itemToDelete).subscribe(data => {
+      let checklistMinusItem = this.listItems.filter(item => {
+        return item !== itemToDelete;
+      });
+      this.listItems = checklistMinusItem;
     });
-    this.checklistItems = checklistMinusItem;
+    
   }
+
+  calculateDaysLeft(){
+    let currentDate = new Date();
+    let dateLeaving = new Date(this.singleList.date_leaving);
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateLeaving.getFullYear(), dateLeaving.getMonth(), dateLeaving.getDate()) ) /(1000 * 60 * 60 * 24));
+}
+
+sendListToTTS() {
+  this.router.navigateByUrl(`/tts/${this.listID}`);
+}
 }
