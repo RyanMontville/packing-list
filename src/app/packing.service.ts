@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { User } from "./user.model";
-import { List } from "./list.model";
-import { Item } from "./item.model";
+import { User } from "./models/user.model";
+import { List } from "./models/list.model";
+import { Item } from "./models/item.model";
 
 @Injectable({
   providedIn: 'root'

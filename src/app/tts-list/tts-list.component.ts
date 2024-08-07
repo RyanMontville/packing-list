@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet, RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { PackingService } from '../packing.service';
-import { Item } from '../item.model';
+import { Item } from '../models/item.model';
 
 @Component({
   selector: 'app-tts-list',

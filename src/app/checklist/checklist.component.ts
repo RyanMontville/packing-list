@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Item } from '../item.model';
+import { Item } from '../models/item.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgStyle } from '@angular/common';
-import { List } from '../list.model';
+import { List } from '../models/list.model';
 import { PackingService } from '../packing.service';
 
 @Component({

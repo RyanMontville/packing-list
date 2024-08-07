@@ -4,8 +4,8 @@ import { LocalService } from '../local.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PackingService } from '../packing.service';
-import { User } from '../user.model';
-import { List } from '../list.model';
+import { User } from '../models/user.model';
+import { List } from '../models/list.model';
 
 @Component({
   selector: 'app-home',
