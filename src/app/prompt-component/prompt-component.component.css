@@ -1,0 +1,45 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+hr {
+    color: #bebebe;
+}
+
+.pwa-icon {
+    height: 50px;
+    border: 1px solid black;
+}
+
+button {
+    text-align: center;
+    background-color: whtie;
+    color: black;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#install-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.add-to-home {
+    flex-grow: 1;
+    font-size: 20px;
+}
+.close {
+    margin: 0 10px;
+}
+.close-ios-inv {
+    display: flex;
+    align-items: center;
+}

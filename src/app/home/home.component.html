@@ -1,0 +1,43 @@
+<main>
+    @if (!askForUsername) {
+        <section id="app-header">
+            <button class="material-symbols-outlined header-icon" (click)="reloadApp()">
+                checklist
+            </button>
+            <h1>Welcome {{username}}</h1>
+            <button class="material-symbols-outlined header-icon-click" (click)="logInAsDifferentUser()">
+                settings_account_box
+            </button>
+        </section>
+        <section id="list-of-lists">
+            @for (list of userLists; track list) {
+                <div class="list-name">
+                    <p><a (click)="goToList(list.list_id)">{{list.list_name}}</a></p>
+                </div>
+            }
+        </section>
+        @if (!showCreateNewList) {
+            <div class="list-name" (click)="showCreateNewList = true">
+                <span class="material-symbols-outlined">add</span>
+                <p>Start new list</p>
+            </div>
+        }
+        @if (showCreateNewList) {
+            <div class="list-name">
+                <span class="material-symbols-outlined header-icon-click" (click)="showCreateNewList = false">close</span>
+                <input [(ngModel)]="newListName" type="text" placeholder="Enter the title for the list" class="inputBar"
+                (keydown.enter)="onSubmit(1)" id="createNewListBar" />
+                <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(1)">check</span>
+            </div>
+        }
+    }
+    @if (askForUsername) {
+        <div id="app-header"><h2>Please enter a username</h2></div>
+        <div class="list-name">
+            <span class="material-symbols-outlined header-icon-click" (click)="askForUsername = false">close</span>
+            <input [(ngModel)]="usernameResopnse" type="text" placeholder="Enter your username" class="inputBar"
+            (keydown.enter)="onSubmit(0)" id="setUserBar" />
+            <span class="material-symbols-outlined header-icon-click" (click)="onSubmit(0)">check</span>
+        </div>
+    }
+</main>

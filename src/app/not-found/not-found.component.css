@@ -1,0 +1,27 @@
+#Checklist-header {
+    border-bottom: 1px solid darkgray;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#Checklist-header a {
+    color: var(--main-color);
+}
+
+h2 {
+    flex-grow: 1;
+    font-size: 50px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+.text {
+    padding: 10px 20px;
+    font-size: 30px;
+}

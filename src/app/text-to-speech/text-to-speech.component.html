@@ -1,0 +1,25 @@
+<main>
+    <section>
+        <div id="header">
+            <button routerLink="/"  class="material-symbols-outlined header-icon-click">arrow_back</button>
+            <h2>{{listTitle}}</h2>
+            <button class="material-symbols-outlined header-icon-click" (click)="startFromTop()">restart_alt</button>
+        </div>
+        @if (deviceHasTTS) {
+            @if (!checklistComplete) {
+                <h3>Next item: {{currentItem}}</h3>
+                <button (click)="readList()" class="tts-button">
+                    <span class="material-symbols-outlined">
+                        brand_awareness
+                        </span>
+                </button>
+            }
+            @if (checklistComplete) {
+                <h2>Checklist Completed!</h2>
+            }
+        }
+        @if (!deviceHasTTS) {
+            <p>Sorry, it looks like your device doesn't support text-to-speech.</p>
+        }
+    </section>
+</main>

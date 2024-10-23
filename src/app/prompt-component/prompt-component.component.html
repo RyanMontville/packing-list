@@ -1,0 +1,56 @@
+<!--@if (data.mobileType === 'android') {
+<div class="android-prompt">
+  <div id="prompt-header">
+    <h2>Install Packing List</h2>
+    <button (click)="close()" class="material-symbols-outlined">close</button>
+  </div>
+  <hr />
+  <div>Install this app on your phone to easily access it anytime. No downloads. No app store. No hassle.</div>
+  <button mat-button (click)="installPwa()" class="add-to-home">Click here to install app</button>
+</div>
+}
+@if (data.mobileType === 'ios') {
+<div class="ios-prompt">
+  <div id="prompt-header">
+    <h2>Install Packing List</h2>
+    <button (click)="close()" class="material-symbols-outlined">close</button>
+  </div>
+  <hr />
+  <div>Install this app on your phone to easily access it anytime. No downloads. No app store. No hassle.</div>
+  <div>1) Tap on <img class="nudgeImage" height="22" alt="Share Button Image" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy5
+      3My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMC44OCAyNy4yNSI+PGRlZnM+PHN0eWxlPi
+      5jbHMtMXtmaWxsOm5vbmU7c3Ryb2tlOiMyMzFmMjA7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5TY
+      WZhcmlfU2hhcmU8L3RpdGxlPjxwb2x5bGluZSBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTMuMTMg
+      OCAyMC4zOCA4IDIwLjM4IDI2Ljc1IDAuNSAyNi43NSAwLjUgOCA3LjUgOCIvPjxsaW5lIGNsYXN
+      zPSJjbHMtMSIgeDE9IjEwLjQ0IiB5MT0iMTciIHgyPSIxMC40NCIvPjxsaW5lIGNsYXNzPSJjbH
+      MtMSIgeDE9IjEwLjQ4IiB5MT0iMC4zOCIgeDI9IjE1LjI4IiB5Mj0iNS4xOCIvPjxsaW5lIGNsY
+      XNzPSJjbHMtMSIgeDE9IjEwLjQ0IiB5MT0iMC4zOCIgeDI9IjUuNjQiIHkyPSI1LjE4Ii8+PC9z
+      dmc+" /></div>
+  <div>2) Select 'Add to Home screen'</div>
+</div>
+}-->
+
+<div id="prompt-to-install">
+  <div id="prompt-header">
+    <img src="https://raw.githubusercontent.com/RyanMontville/packing-list/main/public/icons/icon-512x512.png" class="pwa-icon" alt="packing list icon" />
+    <h2>Install Packing List</h2>
+    <button (click)="close()" class="material-symbols-outlined">close</button>
+  </div>
+  <hr />
+  <div>Install this app on your phone to easily access it anytime. No downloads. No app store. No hassle.</div>
+  @if (data.mobileType === 'android') {
+    <div id="install-wrapper"><button (click)="installPwa()" class="add-to-home">Click here to install app</button></div>
+  }
+  @if (data.mobileType === 'ios') {
+    <div>1) Tap on <img class="nudgeImage" height="22" alt="Share Button Image" src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy5
+      3My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMC44OCAyNy4yNSI+PGRlZnM+PHN0eWxlPi
+      5jbHMtMXtmaWxsOm5vbmU7c3Ryb2tlOiMyMzFmMjA7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5TY
+      WZhcmlfU2hhcmU8L3RpdGxlPjxwb2x5bGluZSBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTMuMTMg
+      OCAyMC4zOCA4IDIwLjM4IDI2Ljc1IDAuNSAyNi43NSAwLjUgOCA3LjUgOCIvPjxsaW5lIGNsYXN
+      zPSJjbHMtMSIgeDE9IjEwLjQ0IiB5MT0iMTciIHgyPSIxMC40NCIvPjxsaW5lIGNsYXNzPSJjbH
+      MtMSIgeDE9IjEwLjQ4IiB5MT0iMC4zOCIgeDI9IjE1LjI4IiB5Mj0iNS4xOCIvPjxsaW5lIGNsY
+      XNzPSJjbHMtMSIgeDE9IjEwLjQ0IiB5MT0iMC4zOCIgeDI9IjUuNjQiIHkyPSI1LjE4Ii8+PC9z
+      dmc+" /></div>
+  <div>2) Select 'Add to Home screen'</div>
+  }
+</div>
